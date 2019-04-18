@@ -1,0 +1,32 @@
+<html>
+<body>
+<pre>
+<h1>礦ision2 Build Log</h1>
+<h2>Project:</h2>
+E:\51单片机RFID射频IC卡板子资料V2\程序代码\STC_BT\prj\STC_BT.uv2
+Project File Date:  04/23/2018
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling ctrl.c...
+compiling key.c...
+compiling lcd12864.c...
+compiling main.c...
+compiling rc522.c...
+compiling timer.c...
+compiling uart.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CTRL_PROCESS?CTRL
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FEED_WDT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INIT_RC522?RC522
+Program Size: data=15.2 xdata=531 code=9609
+creating hex file from "STC_BT"...
+"STC_BT" - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+"STC_BT" - 0 Error(s), 0 Warning(s).
+</pre>
+</body>
+</html>

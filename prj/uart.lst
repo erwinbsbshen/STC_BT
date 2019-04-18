@@ -1,0 +1,104 @@
+C51 COMPILER V7.50   UART                                                                  04/26/2018 21:29:28 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN .\uart.obj
+COMPILER INVOKED BY: d:\Keil\C51\BIN\C51.EXE ..\code\uart.c LARGE BROWSE DEBUG OBJECTEXTEND PRINT(.\uart.lst) OBJECT(.\u
+                    -art.obj)
+
+line level    source
+
+   1          #include "include.h"
+   2          
+   3          INT8U  UartBuf[UART_MAX_LEN] = { 0 };
+   4          INT8U UartCount = 0, UartLen = 0, UartStart = FALSE, UartComp = FALSE;
+   5          
+   6          /**********************************************************************
+   7          functionName:putChar(BYTE sentData)
+   8          description:通过串口发送数据sentData
+   9          **********************************************************************/
+  10          void send_byte( INT8U SendData )
+  11          {
+  12   1          ES = 0;
+  13   1          TI = 0;
+  14   1          SBUF = SendData;
+  15   1          while( TI == 0 );
+  16   1          TI = 0;
+  17   1          ES = 1;
+  18   1      }
+  19          
+  20          
+  21          void send_bytes( INT8U *Buf )
+  22          {
+  23   1          while( *Buf )
+  24   1          {
+  25   2              send_byte( *Buf++ );
+  26   2          }
+  27   1      }
+  28          
+  29          /**********************************************************************
+  30          串口发送格式：fe  cmdlen  datalen cxx cxx dxx dxx dxx ... check
+  31          **********************************************************************/
+  32          void uart_interrupt_receive(void) interrupt 4
+  33          {
+  34   1          INT8U ReByte;
+  35   1          if( RI == 1 )
+  36   1          {
+  37   2              RI = 0;
+  38   2              ReByte = SBUF;
+  39   2      
+  40   2              if(UartCount >= UART_MAX_LEN)
+  41   2              {
+  42   3                  UartCount = 0 ;
+  43   3              }
+  44   2              else
+  45   2              {
+  46   3                  UartBuf[ UartCount++ ] = ReByte;
+  47   3              }
+  48   2          }
+  49   1      }
+  50          
+  51          //UART0 initialize
+  52          // desired baud rate: 9600
+  53          // actual: baud rate:9600 (0.0%)
+  54          // char size: 8 bit
+C51 COMPILER V7.50   UART                                                                  04/26/2018 21:29:28 PAGE 2   
+
+  55          // parity: Disabled
+  56          void init_uart(void)
+  57          {
+  58   1          SCON = 0x50;
+  59   1          ES=1;
+  60   1          AUXR1|= 0X80;
+  61   1      }
+  62          
+  63          
+  64          void clear_buf_uart(void)
+  65          {
+  66   1          unsigned int i = 0 ,c ;
+  67   1          c = UART_MAX_LEN +1 ;
+  68   1          ES = 0 ;
+  69   1      
+  70   1          for( i = 0 ; i < c ; i ++)
+  71   1          {
+  72   2             UartBuf[i] = 0x0 ;
+  73   2          }
+  74   1      
+  75   1          UartCount = 0 ;
+  76   1      
+  77   1          ES = 1 ;
+  78   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    183    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     54       3
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,9 @@
+".\ctrl.obj",
+".\key.obj",
+".\lcd12864.obj",
+".\main.obj",
+".\rc522.obj",
+".\timer.obj",
+".\uart.obj" 
+TO "STC_BT" 
+RAMSIZE(256) 
